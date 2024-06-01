@@ -1,0 +1,176 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <button
+        type="button"
+        routerLink="/attendance/add"
+        class="btn bgMain txtMain w-100 me-2 px-5"
+      >
+        Add
+      </button>
+      <!-- <button type="button" class="btn btn-success me-2">
+        <i class="fa-regular fa-file-excel"></i>
+        Excel
+      </button> -->
+    </div>
+    <form #form="ngForm" (submit)="getFilteredDate()" *ngIf="userParams">
+      <div class="d-flex align-items-center">
+        <input
+          [(ngModel)]="userParams.queryString"
+          name="queryString"
+          type="text"
+          class="form-control me-2"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button type="button" class="btn bgMain txtMain" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  <form #form="ngForm" (submit)="getFilteredDate()" *ngIf="userParams">
+    <div class="row mb-4">
+      <div class="col-md-3 d-flex align-items-center">
+        <label for="fromDate" class="form-label me-2 txtMain">From</label>
+        <div class="input-group">
+          <span class="input-group-text"
+            ><i class="far fa-calendar-alt"></i
+          ></span>
+          <input
+            [(ngModel)]="userParams.startDate"
+            name="startDate"
+            type="date"
+            class="form-control"
+            id="fromDate"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 d-flex align-items-center">
+        <label for="toDate" class="form-label me-2 txtMain">To</label>
+        <div class="input-group">
+          <span class="input-group-text"
+            ><i class="far fa-calendar-alt"></i
+          ></span>
+          <input
+            [(ngModel)]="userParams.endDate"
+            name="endDate"
+            type="date"
+            class="form-control"
+            id="toDate"
+          />
+        </div>
+      </div>
+      <div class="col-md-6 d-flex justify-content-between align-items-center">
+        <div>
+          <button type="submit" class="btn bgMain txtMain me-2">Show</button>
+          <button
+            type="button"
+            class="btn bgMain txtMain me-2"
+            (click)="resetFilters()"
+          >
+            Reset filters
+          </button>
+        </div>
+        <!-- <div>
+          <button type="button" class="btn btn-danger me-2">
+            <i class="fas fa-file-pdf"></i>
+          </button>
+          <button type="button" class="btn btn-secondary">
+            <i class="fas fa-print"></i>
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </form>
+
+  <p *ngIf="!attendanceReport">No data available</p>
+  <table class="table" *ngIf="attendanceReport">
+    <thead class="bgMain txtMain">
+      <tr>
+        <th scope="col">Department</th>
+        <th scope="col">Employee name</th>
+        <th scope="col">Check-In</th>
+        <th scope="col">Check-Out</th>
+        <th scope="col">Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="!pagination && firstLoad == true">
+        <td class="text-center" colspan=" 7">
+          Please, enter a valid employee name
+        </td>
+      </tr>
+      <tr
+        *ngFor="let record of attendanceReport"
+        [ngClass]="{ absent: record.status === 1 }"
+      >
+        <td>{{ record.deptName }}</td>
+        <td>{{ record.empName }}</td>
+        <td>{{ record.arrival == null ? " -------" : record.arrival }}</td>
+        <td>{{ record.arrival == null ? " -------" : record.departure }}</td>
+
+        <td>{{ record.day }}</td>
+        <td>{{ record.status == 0 ? "Attended" : "Absent" }}</td>
+        <td>
+          <div
+            class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+          >
+            <button
+              class="btn btn-danger"
+              (click)="openModal(template, record.empId, record.day)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div *ngIf="attendanceReport?.length != 0" class="row mt-3 justify-content-end">
+    <div class="col-lg-7">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+    
+  <!-- <div
+    class="d-flex justify-content-center"
+    *ngIf="pagination && attendanceReport"
+  >
+    <pagination
+      [boundaryLinks]="true"
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;"
+    >
+    </pagination>
+  </div> -->
+
+  <!-- pop up to delete -->
+  <br /><br />
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <button
+        type="button"
+        class="btn btn-default btn-danger m-2"
+        (click)="DeleteAttendence(attendancedel, attendancedate)"
+      >
+        Yes
+      </button>
+      <button type="button" class="btn btn-primary" (click)="decline()">
+        No
+      </button>
+    </div>
+  </ng-template>
+</div>

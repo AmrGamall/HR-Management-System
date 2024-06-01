@@ -1,0 +1,41 @@
+<div class="col-md-8 col-lg-6 mx-auto mt-5 w-50">
+    <div class="card shadow">
+        <div class="card-header">
+            <div class="card-title fs-4">New Department</div>
+        </div>
+        <div class="card-body">
+            <form #f="ngForm" (ngSubmit)="onSubmit()" class="form-container" [formGroup]="validDepartment"
+                #form="ngForm">
+
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" [(ngModel)]="departmentDTO.name"
+                                class="form-control" placeholder="Enter department name" formControlName="name" />
+                            <div>
+                                <small
+                                    *ngIf="(name?.errors?.['required'] && name?.touched) || (isSubmitted && name?.untouched)"
+                                    class="text-danger m-3">
+                                    This field is required
+                                </small>
+                                <small *ngIf="name?.errors?.['pattern'] && (name?.touched)"
+                                    class="text-danger m-3">
+                                    Please enter a valid name (letters only)
+                                </small>
+                            </div>
+                        </div>
+
+
+
+
+             
+                <!-- Submit Button -->
+                <!-- [disabled]="validationEmployee.invalid" -->
+                <div class="button-container mt-4">
+                    <button type="submit" class="btn bgMain txtMain mt-1 w-50 m-auto center">
+                        Add Department
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

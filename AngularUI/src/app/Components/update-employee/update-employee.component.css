@@ -1,0 +1,8 @@
+.form-group{
+    margin-bottom: 5px;
+}
+.button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+}

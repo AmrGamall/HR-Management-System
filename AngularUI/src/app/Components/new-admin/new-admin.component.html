@@ -1,0 +1,176 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <div class="card shadow">
+        <div class="card-header">
+          <div class="card-title fs-4">New User</div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="validationAdmin">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                placeholder="Enter Full Name"
+                formControlName="fullname"
+                [(ngModel)]="user.fullName"
+              />
+              <div
+                [hidden]="
+                  validationAdmin.get('fullname')?.valid ||
+                  validationAdmin.get('fullname')?.untouched
+                "
+              >
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('fullname')?.errors?.['required']"
+                >
+                  Full Name is required.
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter Email"
+                formControlName="email"
+                [(ngModel)]="user.email"
+              />
+
+              <div
+                [hidden]="
+                  validationAdmin.get('email')?.valid ||
+                  validationAdmin.get('email')?.untouched
+                "
+              >
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('email')?.errors?.['required']"
+                >
+                  Email is required.
+                </small>
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('email')?.errors?.['email']"
+                >
+                  Invalid email format.
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="password"
+                [(ngModel)]="user.password"
+              />
+
+              <div
+                [hidden]="
+                  validationAdmin.get('password')?.valid ||
+                  validationAdmin.get('password')?.untouched
+                "
+              >
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('password')?.errors?.['required']"
+                >
+                  Password is required.
+                </small>
+                <small
+                  *ngIf="password?.errors?.['minlength'] && (password?.touched )"
+                  class="text-danger m-3"
+                >
+                  * minimum must be 4 numbers
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmedPassword" class="form-label"
+                >Confirmed Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="confirmedPassword"
+                [(ngModel)]="user.confirmPassword"
+              />
+
+              <div
+                [hidden]="
+                  validationAdmin.get('confirmedPassword')?.valid ||
+                  validationAdmin.get('confirmedPassword')?.untouched
+                "
+              >
+                <small
+                  class="text-danger m-3"
+                  *ngIf="validationAdmin.get('confirmedPassword')?.errors?.['required']"
+                >
+                  Confirmed Password is required.
+                </small>
+                <small
+                  class="text-danger m-3"
+                  [hidden]="confirmedPassword?.valid||confirmedPassword?.untouched && ! confirmedPassword?.errors?.['requird']"
+                >
+                  Passwords do not match.
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="roles" class="form-label">Role</label>
+              <select
+                  class="form-select"
+                  id="roles"
+                  formControlName="role"
+                  [(ngModel)]="user.roleName" 
+              >
+                  <option selected>Choose a role...</option>
+                  <ng-container *ngFor="let role of roles">
+                      <option *ngIf="role.name !== 'SuperAdmin'" [value]="role.name">
+                          {{ role.name }}
+                      </option>
+                  </ng-container>
+              </select>
+              <div
+                  [hidden]="
+                      validationAdmin.get('role')?.valid ||
+                      validationAdmin.get('role')?.untouched
+                  "
+              >
+                  <small
+                      class="text-danger m-3"
+                      *ngIf="validationAdmin.get('role')?.errors?.['required']"
+                  >
+                      Role is required.
+                  </small>
+              </div>
+          </div>
+          
+
+            <div class="text-center">
+              <button
+                type="submit"
+                (click)="sucsess()"
+                class="btn bgMain txtMain w-50"
+                [disabled]="validationAdmin.invalid"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

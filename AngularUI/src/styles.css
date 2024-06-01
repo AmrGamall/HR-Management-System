@@ -1,0 +1,98 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --light: white;
+  --dark: #2a6889;
+  --medium: #a8d7ed;
+
+  /* sidebar */
+  --color-white: #fff;
+  --color-body: #e4e9f7;
+  --color-light: #e0e0e0;
+}
+
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+/* 
+  background-image: linear-gradient(
+      to right,
+      rgba(68, 180, 221, 0.7),
+      rgba(8, 28, 57, 0.8)
+    ),
+    url("assets/Human-resources.jpg"); */
+
+  background-size: cover;
+  background-position: top;
+}
+
+.txtMain {
+  color: var(--light) !important;
+}
+
+.txtSub {
+  color: var(--dark) !important;
+}
+
+.bgMain {
+  background-color: var(--dark) !important;
+}
+
+.otherButton{
+  background-color: var(--dark) !important;
+}
+
+.bgSub {
+  background-color: var(--medium) !important;
+}
+
+thead th {
+  background-color: var(--dark) !important;
+  color: var(--light) !important;
+}
+
+tr:hover td,
+tr:hover th {
+  background-color: #e1e3e4;
+}
+
+.card-header {
+  background-color: var(--dark);
+  color: white;
+  text-align: center;
+}
+/* 
+.table {
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.5);
+} */
+
+.btn {
+  box-shadow:4px 3px 26px #b0b0b0;
+  
+}
+
+.btn:hover {
+  box-shadow:none;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: translateY(0px);
+}
+
+a {
+  text-decoration: none;
+}
+
+button.bgMain {
+  border-color: rgba(255, 255, 255, 0.3);
+}
